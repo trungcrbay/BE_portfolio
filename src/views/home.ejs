@@ -1,0 +1,61 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/home.css" />
+  </head>
+
+  <body>
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr:hover {
+        background-color: coral;
+      }
+    </style>
+    <div class="topnav">
+      <a class="active" href="/v1">Home</a>
+      <a href="/v1/create">Create Users</a>
+    </div>
+    <div class="table-container">
+      <%= JSON.stringify(listUsers) %>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Name</th>
+          <th>City</th>
+          <th>Actions</th>
+        </tr>
+      
+        <% for (let i = 0; i < listUsers.length; i++) { %>
+          <tr></tr>
+        <td> <%= listUsers[i].id %></td>
+        <td><%= listUsers[i].email %></td>
+        <td><%= listUsers[i].name %></td>
+        <td><%= listUsers[i].city %></td>
+        <td>
+          <a href="/update/<%= listUsers[i].id %>">
+            <button>Edit</button>
+          </a>
+          <form action="/delete-user/<%= listUsers[i].id %>" method="POST">
+            <button>Delete</button>
+          </form>
+        </td>
+      </tr>
+        <% } %>
+      </table>
+    </div>
+  </body>
+</html>
