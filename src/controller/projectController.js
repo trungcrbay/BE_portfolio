@@ -2,6 +2,7 @@
 const MyUser = require('../model/user')
 const Project = require('../model/project');
 const { apiUploadSingleFile, apiUploadMultitleFile } = require('../services/fileServices');
+const { searchQueryProject } = require('../services/projectService');
 
 const getProject = async (req, res) => {
     let results = await Project.find();
@@ -38,7 +39,15 @@ const postCreateProject = async (req, res) => {
     });
 };
 
+const searchProject =  async (req, res) => {
+    let title = req.query.title;
+    let results = await searchQueryProject(title)
+    return res.status(200).json({
+        errorCode: 0,
+        data: results,
+    });
+}
 
 module.exports = {
-    getProject,postCreateProject
+    getProject,postCreateProject,searchProject
 }

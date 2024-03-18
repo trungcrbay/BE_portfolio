@@ -8,13 +8,19 @@ const configViewEngine = require('./config/viewEngine')
 const webRoutes = require('./routes/web')
 const apiRoutes = require('./routes/api')
 const fileUpload = require('express-fileupload');
+require('dotenv').config()
 var cors = require('cors')
+const helmet = require('helmet')
+const morgan = require('morgan')
+var createError = require('http-errors')
+// app.use(helmet());
+// app.use(morgan('combined'))
 
-const MyUser = require('./model/user')
-const Contact = require('./model/contact')
-const Project = require('./model/project')
-const Skill = require('./model/skill')
+
+const Note = require('./model/note')
+const Client = require('./model/client')
 app.use(fileUpload());
+
 
 // /https://stackoverflow.com/questions/9304888/how-to-get-data-passed-from-a-form-in-express-node-js
 //config req.body to get data passes
@@ -34,13 +40,12 @@ configViewEngine(app)
 // app.use(express.static(path.join(__dirname, 'public')))
 
 //test schema without MVC
-//const test = new MyUser({age:21,name:'ddd'});
-//test.save()
-//const projects = new Project({});
-//projects.save()
+
 
 //const skills = new Skill({});
 //skills.save()
+// const notes = new Note({});
+// notes.save()
 //scheme with MVC
 
 
@@ -48,6 +53,31 @@ configViewEngine(app)
 app.use(cors());
 app.use('/', webRoutes);
 app.use('/v1', apiRoutes);
+
+app.use((req, res, next) => {
+    // res.status(404);
+    // res.json({
+    //     status: 404,
+    //     message: 'not found',
+    //     links: {
+    //         'doc': 'https://your-docum   entation-url-here' // Replace this URL with your actual documentation URL
+    //     }
+    // });
+    next(createError(404, 'Please login to view this page.'))
+});
+
+//hứng lỗi th trên sử dụng err.status và err.message
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.json({
+        status: err.status || 500,
+        message: err.message || err,
+        links: {
+            'doc': 'https://your-documentation-url-here' // Replace this URL with your actual documentation URL
+        }
+    });
+});
+
 
 
 (async () => {
