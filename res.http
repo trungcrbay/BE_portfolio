@@ -14,3 +14,7 @@ Content-Type: application/json
     "username":"zxcvzxccxz@gmail.com",
     "password" : "123456"
 }
+
+###
+GET http://localhost:8081/v1/listUser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGllbnRJZCI6IjY1ZjgwYjk0Nzg1YTRjZWJkYzAwM2I2OCIsImlhdCI6MTcxMDgzMTMwNSwiZXhwIjoxNzEwODM0OTA1fQ.kNIL87Tj5QKN4npjRqvXES0Gqsi_mZXSSnDfcavMVFc

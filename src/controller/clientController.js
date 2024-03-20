@@ -3,7 +3,7 @@ const Client = require('../model/client')
 const createError = require('http-errors')
 const { clientValidate } = require('../helpers/validation')
 const bcrypt = require("bcrypt");
-const {signAccessToken} = require('../helpers/jwt_services');
+const {signAccessToken, signRefreshToken} = require('../helpers/jwt_services');
 
 
 const postRegister = async (req, res, next) => {
@@ -78,8 +78,10 @@ const postLogin = async (req, res, next) => {
         }
 
         const access_token = await signAccessToken(client._id)
+        const refresh_token = await signRefreshToken(client._id)
         res.json({
-            access_token
+            access_token,
+            refresh_token
         })
         res.send(client);
 
